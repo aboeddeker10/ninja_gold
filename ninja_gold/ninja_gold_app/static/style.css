@@ -1,0 +1,29 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+#main-wrap{
+    max-width: 900px;
+}
+
+#main-wrap p{
+    display: block;
+    text-align: center;
+}
+
+#wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+}
+
+h1{
+    color: red;
+    display: block;
+    text-align: center;
+}
+
+.forms{
+    border: 3px solid black;
+}
