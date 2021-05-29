@@ -20,7 +20,7 @@
                     <p>Earns 10-20 gold</p>
                     <label for="farm"></label>
                     <input type="submit" id="farm" name="farm" value="Find Gold!">
-
+                    <input type="hidden" name="building" value="farm">
                 </form><br>
             </div>
             <div class="forms">
@@ -30,8 +30,9 @@
                     <p>Earns 5-10 gold</p>
                     <label for="cave"></label>
                     <input type="submit" id="cave" name="cave" value="Find Gold!">
-
+                    <input type="hidden" name="building" value="cave">
                 </form><br>
+
             </div>
             <div class="forms">
                 <form action="/gold" method="POST">
@@ -40,20 +41,28 @@
                     <p>Earns 2-5 gold</p>
                     <label for="house"></label>
                     <input type="submit" id="house" name="house" value="Find Gold!">
-
+                    <input type="hidden" name="building" value="house">
                 </form><br>
             </div>
             <div class="forms">
                 <form action="/gold" method="POST">
                     {% csrf_token %}
                     <h3>Casino</h3>
-                    <p>Earns 0-50 gold</p>
+                    <p>Earns -50 to 50 gold</p>
                     <label for="casino"></label>
+                    <input type="hidden" name="building" value="casino">
                     <input type="submit" id="casino" name="casino" value="Find Gold!">
-
                 </form><br>
             </div>
         </div>
+        <h2>Activities</h2>
+        <div id="activities">
+            {% for activity in request.session.activities reversed %}
+                <p>{{ activity }}</p>
+                {% endfor %}
+        </div>
+        <h2>Clear Game</h2>
+        <a href="/reset">Reset</a>
     </div>
 </body>
 </html>

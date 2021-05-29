@@ -2,27 +2,34 @@ from django.http.response import HttpResponse
 from django.shortcuts import render, HttpResponse, redirect
 import random
 
-# Create your views here.
-GOLD_MAP = {
-    "farm": (10, 20),
-    "cave": (5, 10),
-    "house": (2, 5),
-    "casino": (0, 50)
-}
-
 
 def index(request):
+    if not "gold" in request.session or "activities" not in request.session:
+        request.session["gold"] = 0
+        request.session["activities"] = []
     return render(request, 'index.html')
 
 
-yourgold = 0
-
-
-def process(request):
-    if 'name' == 'farm':
-        request.session['farm'] = request.POST['farm']
-        yourgold += random(10-20)
-
-
 def gold(request):
-    pass
+    print(f'Your gold is currently: {{request.session["gold"]}}')
+    if request.POST['building'] == 'cave':
+        addedGold = random.randint(5, 10)
+        request.session['gold'] += addedGold
+        request.session['activities'].append(
+            f'You went to cave and received {addedGold} and now you have a total of {request.session["gold"]}')
+    if request.POST['building'] == 'house':
+        addedGold = random.randint(2, 5)
+        request.session['gold'] += addedGold
+        request.session['activities'].append(
+            f'You went to house and received {addedGold} and now you have a total of {request.session["gold"]}')
+    if request.POST['building'] == 'farm':
+        request.session['gold'] += random.randint(10, 20)
+    if request.POST['building'] == 'casino':
+        request.session['gold'] += random.randint(-50, 50)
+    print(f'Your gold has been updated to: {{request.session["gold"]}}')
+    return redirect('/')
+
+
+def reset(request):
+    request.session.flush()
+    return redirect('/')
